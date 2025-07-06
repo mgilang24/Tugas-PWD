@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Punya gilang</title>
+    <style>
+      :root {
+        --primary-bg: #4a90e2;
+        --secondary-bg: #357abd;
+        --accent-color: #ff6b6b;
+        --success-color: #4ecdc4;
+        --warning-color: #feca57;
+        --text-color: white;
+        --glass-bg: rgba(255, 255, 255, 0.1);
+        --glass-border: rgba(255, 255, 255, 0.2);
+        --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        --hover-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Arial", sans-serif;
+        background: var(--primary-bg);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-color);
+        transition: background 0.3s ease;
+      }
+
+      .container {
+        max-width: 800px;
+        width: 90%;
+        background: var(--glass-bg);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: var(--shadow);
+        text-align: center;
+        border: 1px solid var(--glass-border);
+      }
+
+      h1 {
+        font-size: 2.5em;
+        margin-bottom: 30px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .feature-card {
+        background: var(--glass-bg);
+        margin: 20px 0;
+        padding: 25px;
+        border-radius: 15px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid var(--glass-border);
+      }
+
+      .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--hover-shadow);
+      }
+
+      .counter {
+        font-size: 3em;
+        margin: 20px 0;
+        font-weight: bold;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .btn {
+        background: var(--success-color);
+        border: none;
+        color: var(--text-color);
+        padding: 15px 30px;
+        margin: 10px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 18px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        background: var(--secondary-bg);
+      }
+
+      .color-btn {
+        background: var(--accent-color);
+        border: none;
+        color: var(--text-color);
+        padding: 12px 25px;
+        margin: 5px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .color-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        background: var(--warning-color);
+      }
+
+      .emoji-rain {
+        position: fixed;
+        top: -10px;
+        font-size: 30px;
+        animation: fall 3s linear infinite;
+        z-index: 1000;
+      }
+
+      @keyframes fall {
+        0% {
+          transform: translateY(-100vh);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(100vh);
+          opacity: 0;
+        }
+      }
+
+      .pulse {
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Tugas Pwd</h1>
+
+      <!-- Counter Feature -->
+      <div class="feature-card">
+        <h2>📊 Counter</h2>
+        <div class="counter" id="counter">0</div>
+        <button class="btn" onclick="incrementCounter()">➕ Tambah</button>
+        <button class="btn" onclick="decrementCounter()">➖ Kurang</button>
+        <button class="btn" onclick="resetCounter()">🔄 Reset</button>
+      </div>
+
+      <!-- Color Changer -->
+      <div class="feature-card">
+        <h2>🎨 Ubah Warna Latar</h2>
+        <div class="color-changer">
+          <button class="color-btn" onclick="changeColor('#4a90e2')">
+            Biru
+          </button>
+          <button class="color-btn" onclick="changeColor('#ff6b6b')">
+            Merah
+          </button>
+          <button class="color-btn" onclick="changeColor('#26de81')">
+            Hijau
+          </button>
+          <button class="color-btn" onclick="changeColor('#feca57')">
+            Kuning
+          </button>
+          <button class="color-btn" onclick="changeColor('#8e44ad')">
+            Ungu
+          </button>
+        </div>
+      </div>
+
+      <!-- Fun Features -->
+      <div class="feature-card">
+        <h2>🎪 Fitur Menyenangkan</h2>
+        <button class="btn" onclick="createEmojiRain()">🌧️ Hujan Emoji</button>
+        <button class="btn" onclick="togglePulse()">💓 Animasi Pulse</button>
+        <button class="btn" onclick="showTime()">⏰ Jam Sekarang</button>
+      </div>
+    </div>
+
+    <script>
+      let counter = 0;
+      let isPulsing = false;
+
+      function incrementCounter() {
+        counter++;
+        document.getElementById("counter").textContent = counter;
+      }
+
+      function decrementCounter() {
+        counter--;
+        document.getElementById("counter").textContent = counter;
+      }
+
+      function resetCounter() {
+        counter = 0;
+        document.getElementById("counter").textContent = counter;
+      }
+
+      function changeColor(color) {
+        document.body.style.background = color;
+      }
+
+      function createEmojiRain() {
+        const emojis = [
+          "🌟",
+          "✨",
+          "💫",
+          "⭐",
+          "🎉",
+          "🎊",
+          "🌈",
+          "🦄",
+          "🎭",
+          "🎪",
+        ];
+
+        for (let i = 0; i < 15; i++) {
+          setTimeout(() => {
+            const emoji = document.createElement("div");
+            emoji.classList.add("emoji-rain");
+            emoji.textContent =
+              emojis[Math.floor(Math.random() * emojis.length)];
+            emoji.style.left = Math.random() * 100 + "%";
+            emoji.style.animationDelay = Math.random() * 2 + "s";
+            document.body.appendChild(emoji);
+
+            setTimeout(() => {
+              emoji.remove();
+            }, 3000);
+          }, i * 100);
+        }
+      }
+
+      function togglePulse() {
+        const container = document.querySelector(".container");
+        if (isPulsing) {
+          container.classList.remove("pulse");
+          isPulsing = false;
+        } else {
+          container.classList.add("pulse");
+          isPulsing = true;
+          setTimeout(() => {
+            container.classList.remove("pulse");
+            isPulsing = false;
+          }, 6000);
+        }
+      }
+
+      function showTime() {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString("id-ID");
+        const dateString = now.toLocaleDateString("id-ID");
+
+        alert(`⏰ Waktu sekarang: ${timeString}\n📅 ${dateString}`);
+      }
+
+      // Animasi loading saat halaman dimuat
+      window.addEventListener("load", function () {
+        const container = document.querySelector(".container");
+        container.style.opacity = "0";
+        container.style.transform = "translateY(50px)";
+
+        setTimeout(() => {
+          container.style.transition = "all 0.8s ease";
+          container.style.opacity = "1";
+          container.style.transform = "translateY(0)";
+        }, 100);
+      });
+    </script>
+  </body>
+</html>
